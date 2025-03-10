@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:17  
+    container_name: rental_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: rental
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Lưu trữ dữ liệu PostgreSQL
+      - ./rental_db.backup:/docker-entrypoint-initdb.d/rental_db.backup  # Tự động restore
+
+volumes:
+  postgres_data:
