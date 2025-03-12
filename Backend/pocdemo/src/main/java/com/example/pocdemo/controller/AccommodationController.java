@@ -29,5 +29,13 @@ public class AccommodationController {
         System.out.println("get all accommodations");
         return accommodationService.getAllAccommodations();
     }
+    @GetMapping("/accommodations/search")
+    public List<Accommodation> searchAccommodations(
+            @RequestParam String address,
+            @RequestParam(defaultValue="10") double radius,
+            @RequestParam(defaultValue="10") int limit
+    ){
+        return accommodationService.searchAccomodations(address,radius,limit);
+    }
 
 }

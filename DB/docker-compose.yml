@@ -1,17 +1,18 @@
 services:
-  postgres:
-    image: postgres:17  
-    container_name: rental_postgres
+  mysql:
+    image: mysql:8
+    container_name: rental_mysql
     restart: always
     ports:
-      - "5432:5432"
+      - "3306:3306"
     environment:
-      POSTGRES_DB: rental
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      MYSQL_DATABASE: rental
+      MYSQL_USER: rental_user
+      MYSQL_PASSWORD: nhuy0600
+      MYSQL_ROOT_PASSWORD: root_password
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Lưu trữ dữ liệu PostgreSQL
-      - ./rental_db.backup:/docker-entrypoint-initdb.d/rental_db.backup  # Tự động restore
+      - mysql_data:/var/lib/mysql  # Lưu trữ dữ liệu MySQL
+      - ./rental_db.sql:/docker-entrypoint-initdb.d/rental_db.sql  # Tự động restore nếu có
 
 volumes:
-  postgres_data:
+  mysql_data:
