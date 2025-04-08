@@ -13,6 +13,42 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql  # Lưu trữ dữ liệu MySQL
       - ./rental_db.sql:/docker-entrypoint-initdb.d/rental_db.sql  # Tự động restore nếu có
+    networks:
+      - elastic
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
+    container_name: rental_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  logstash:
+    build:
+      context: ./logstash
+      dockerfile: Dockerfile
+    container_name: rental_logstash
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    environment:
+      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
+    depends_on:
+      - elasticsearch
+      - mysql
+    networks:
+      - elastic
 
 volumes:
   mysql_data:
+  elasticsearch_data:
+
+networks:
+  elastic:
+    driver: bridge

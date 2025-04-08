@@ -1,0 +1,23 @@
+{
+  "index_patterns": ["accommodations"],
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "properties": {
+      "id": { "type": "integer" },
+      "title": { "type": "text" },
+      "shortDescription": { "type": "text" },
+      "description": { "type": "text" },
+      "address": { "type": "text" },
+      "latitude": { "type": "double" },
+      "logitude": { "type": "double" },
+      "coverImgSrc": { "type": "text" },
+      "price": { "type": "integer" },
+      "numberOfBedroom": { "type": "integer" },
+      "numberOfBed": { "type": "integer" },
+      "maxGuests": { "type": "integer" }
+    }
+  }
+} 

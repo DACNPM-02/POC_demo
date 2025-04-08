@@ -1,4 +1,4 @@
-package com.example.pocdemo.repository;
+package com.example.pocdemo.repository.jpa;
 
 import java.util.List;
 
@@ -29,4 +29,4 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, In
 	        @Param("radius") double radius,
 	        @Param("limit") int limit
 	    );
-}
+} 
